@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Checklist Salute e Sicurezza</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Checklist Salute e Sicurezza</h1>
+    </header>
+    <main>
+        <form id="checklistForm">
+            <div class="item">
+                <label for="item1">Elemento 1:</label>
+                <div class="buttons">
+                    <button type="button" class="conforme" onclick="selezionaOpzione('item1', 'conforme', this)">Conforme</button>
+                    <button type="button" class="non_conforme" onclick="selezionaOpzione('item1', 'non_conforme', this)">Non Conforme</button>
+                    <button type="button" class="osservazione" onclick="selezionaOpzione('item1', 'osservazione', this)">Osservazione</button>
+                </div>
+                <input type="hidden" id="item1" name="item1">
+                <textarea id="note1" name="note1" placeholder="Note"></textarea>
+            </div>
+            <div class="item">
+                <label for="item2">Elemento 2:</label>
+                <div class="buttons">
+                    <button type="button" class="conforme" onclick="selezionaOpzione('item2', 'conforme', this)">Conforme</button>
+                    <button type="button" class="non_conforme" onclick="selezionaOpzione('item2', 'non_conforme', this)">Non Conforme</button>
+                    <button type="button" class="osservazione" onclick="selezionaOpzione('item2', 'osservazione', this)">Osservazione</button>
+                </div>
+                <input type="hidden" id="item2" name="item2">
+                <textarea id="note2" name="note2" placeholder="Note"></textarea>
+            </div>
+            <div class="item">
+                <label for="item3">Elemento 3:</label>
+                <div class="buttons">
+                    <button type="button" class="conforme" onclick="selezionaOpzione('item3', 'conforme', this)">Conforme</button>
+                    <button type="button" class="non_conforme" onclick="selezionaOpzione('item3', 'non_conforme', this)">Non Conforme</button>
+                    <button type="button" class="osservazione" onclick="selezionaOpzione('item3', 'osservazione', this)">Osservazione</button>
+                </div>
+                <input type="hidden" id="item3" name="item3">
+                <textarea id="note3" name="note3" placeholder="Note"></textarea>
+            </div>
+            <button type="button" onclick="generaReport()">Genera Report</button>
+        </form>
+        <div id="report" class="report"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
