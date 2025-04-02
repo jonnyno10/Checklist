@@ -1,107 +1,73 @@
-let startX, startY;
-
-function navigateTo(section) {
-    window.location.href = section + '.html';
-}
-
-function goHome() {
-    window.location.href = 'index.html';
-}
-
-function goToAuditSelection() {
-    window.location.href = 'nuovoAudit.html';
-}
-
-function dragStart(event) {
-    startX = event.clientX || event.touches[0].clientX;
-    startY = event.clientY || event.touches[0].clientY;
-    event.target.classList.add('dragging');
-}
-
-function dragEnd(event) {
-    const element = event.target;
-    element.classList.remove('dragging');
-    const direction = getDragDirection(event);
-    if (direction) {
-        handleDragDirection(direction, element);
-    }
-}
-
-function getDragDirection(event) {
-    const endX = event.clientX || (event.changedTouches ? event.changedTouches[0].clientX : startX);
-    const endY = event.clientY || (event.changedTouches ? event.changedTouches[0].clientY : startY);
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        return deltaX > 0 ? 'right' : 'left';
-    } else {
-        return deltaY > 0 ? 'down' : 'up';
-    }
-}
-
-function handleDragDirection(direction, element) {
-    switch (direction) {
-        case 'left':
-            if (!element.classList.contains('drag-left') && !element.classList.contains('drag-right') && !element.classList.contains('drag-up')) {
-                updateState('NC', element);
-                showNoteDialog('left', element);
-            }
-            break;
-        case 'right':
-            if (!element.classList.contains('drag-left') && !element.classList.contains('drag-right') && !element.classList.contains('drag-up')) {
-                updateState('C', element);
-                showNoteDialog('right', element);
-            }
-            break;
-        case 'up':
-            if (!element.classList.contains('drag-left') && !element.classList.contains('drag-right') && !element.classList.contains('drag-up')) {
-                updateState('NA', element);
-                showNoteDialog('up', element);
-            }
-            break;
-        case 'down':
-            confirmNoteDeletion(element);
-            break;
-    }
-}
-
-function updateState(state, element) {
-    const row = element.closest('tr');
-    const stateCell = row.querySelector('.stato');
-    stateCell.innerText = state;
-    stateCell.classList.remove('drag-left', 'drag-right', 'drag-up');
-    if (state === 'NC') {
-        stateCell.classList.add('drag-left');
-    } else if (state === 'C') {
-        stateCell.classList.add('drag-right');
-    } else if (state === 'NA') {
-        stateCell.classList.add('drag-up');
-    }
-}
-
-function showNoteDialog(direction, element) {
-    const row = element.closest('tr');
-    const note = prompt('Scrivi una nota:');
-    if (note) {
-        const noteCell = row.querySelector('.note');
-        noteCell.innerText = note;
-    }
-}
-
-function confirmNoteDeletion(element) {
-    const row = element.closest('tr');
-    const confirmDeletion = confirm('Vuoi cancellare la nota?');
-    if (confirmDeletion) {
-        const noteCell = row.querySelector('.note');
-        noteCell.innerText = '';
-        const stateCell = row.querySelector('.stato');
-        stateCell.innerText = '';
-        stateCell.classList.remove('drag-left', 'drag-right', 'drag-up');
-    }
-}
-
-// Aggiungi gli eventi touch
-document.querySelectorAll('tr').forEach(row => {
-    row.addEventListener('touchstart', dragStart);
-    row.addEventListener('touchend', dragEnd);
-});
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Documentale Sicurezza</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Audit Documentale Sicurezza</h1>
+        <button onclick="goHome()">Torna alla Home</button>
+        <button onclick="goToAuditSelection()">Torna alla Selezione Audit</button>
+        
+        <h2>Inserisci i dettagli dell'audit:</h2>
+        <label for="dataAudit">Data dell'audit:</label>
+        <input type="date" id="dataAudit" name="dataAudit"><br><br>
+        
+        <label for="nominativoAuditor">Nominativo dell'auditor:</label>
+        <input type="text" id="nominativoAuditor" name="nominativoAuditor"><br><br>
+        
+        <label for="repartoAuditato">Reparto auditato:</label>
+        <input type="text" id="repartoAuditato" name="repartoAuditato"><br><br>
+        
+        <h2>Domande:</h2>
+        <table>
+            <tr>
+                <th>Numero</th>
+                <th>Domanda</th>
+                <th>Stato</th>
+                <th>Foto</th>
+                <th>Note</th>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="dragStart(event)" ontouchend="dragEnd(event)">
+                <td>1</td>
+                <td class="draggable">È presente il DVR?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="dragStart(event)" ontouchend="dragEnd(event)">
+                <td>2</td>
+                <td class="draggable">Il DVR è firmato dal DDL, RSPP, MC ed RLS e reca data certa?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="dragStart(event)" ontouchend="dragEnd(event)">
+                <td>3</td>
+                <td class="draggable">È stato nominato il medico competente con atto formale?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="dragStart(event)" ontouchend="dragEnd(event)">
+                <td>4</td>
+                <td class="draggable">È stato nominato l'RSPP?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" ontouchstart="dragStart(event)" ontouchend="dragEnd(event)">
+                <td>5</td>
+                <td class="draggable">Il DDL ha assunto il ruolo di RSPP?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
