@@ -13,9 +13,8 @@ function goToAuditSelection() {
 }
 
 function dragStart(event) {
-    startX = event.clientX;
-    startY = event.clientY;
-    event.dataTransfer.setData('text/plain', event.target.innerText);
+    startX = event.clientX || event.touches[0].clientX;
+    startY = event.clientY || event.touches[0].clientY;
     event.target.classList.add('dragging');
 }
 
@@ -26,12 +25,13 @@ function dragEnd(event) {
     if (direction) {
         handleDragDirection(direction, element);
     }
-    element.style.position = 'static';
 }
 
 function getDragDirection(event) {
-    const deltaX = event.clientX - startX;
-    const deltaY = event.clientY - startY;
+    const endX = event.clientX || (event.changedTouches ? event.changedTouches[0].clientX : startX);
+    const endY = event.clientY || (event.changedTouches ? event.changedTouches[0].clientY : startY);
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         return deltaX > 0 ? 'right' : 'left';
     } else {
@@ -99,3 +99,9 @@ function confirmNoteDeletion(element) {
         stateCell.classList.remove('drag-left', 'drag-right', 'drag-up');
     }
 }
+
+// Aggiungi gli eventi touch
+document.querySelectorAll('tr').forEach(row => {
+    row.addEventListener('touchstart', dragStart);
+    row.addEventListener('touchend', dragEnd);
+});
