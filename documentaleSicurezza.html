@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Documentale Sicurezza</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Audit Documentale Sicurezza</h1>
+        <button onclick="goHome()">Torna alla Home</button>
+        <button onclick="goToAuditSelection()">Torna alla Selezione Audit</button>
+        
+        <h2>Inserisci i dettagli dell'audit:</h2>
+        <label for="dataAudit">Data dell'audit:</label>
+        <input type="date" id="dataAudit" name="dataAudit"><br><br>
+        
+        <label for="nominativoAuditor">Nominativo dell'auditor:</label>
+        <input type="text" id="nominativoAuditor" name="nominativoAuditor"><br><br>
+        
+        <label for="repartoAuditato">Reparto auditato:</label>
+        <input type="text" id="repartoAuditato" name="repartoAuditato"><br><br>
+        
+        <h2>Domande:</h2>
+        <table>
+            <tr>
+                <th>Numero</th>
+                <th>Domanda</th>
+                <th>Stato</th>
+                <th>Foto</th>
+                <th>Note</th>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                <td>1</td>
+                <td class="draggable">È presente il DVR?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                <td>2</td>
+                <td class="draggable">Il DVR è firmato dal DDL, RSPP, MC ed RLS e reca data certa?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                <td>3</td>
+                <td class="draggable">È stato nominato il medico competente con atto formale?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                <td>4</td>
+                <td class="draggable">È stato nominato l'RSPP?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+            <tr draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                <td>5</td>
+                <td class="draggable">Il DDL ha assunto il ruolo di RSPP?</td>
+                <td class="stato"></td>
+                <td><img src="camera_icon.png" alt="Foto"></td>
+                <td class="note"></td>
+            </tr>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
