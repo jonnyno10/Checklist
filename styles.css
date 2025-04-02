@@ -95,3 +95,14 @@ img {
 .note {
     width: 300px; /* Espandi la colonna delle note */
 }
+
+/* Fix per dispositivi mobili */
+@media screen and (max-width: 768px) {
+    button {
+        display: block !important;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
