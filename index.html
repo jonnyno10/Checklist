@@ -9,23 +9,10 @@
 <body>
     <div class="container">
         <h1>Benvenuto nel Programma</h1>
-        <button id="newAuditButton">Inizia nuovo audit</button>
-        <button id="previousReportsButton">Report Precedenti</button>
-        <button id="findingsListButton">Elenco dei Rilievi</button>
+        <button onclick="navigateTo('nuovoAudit')">Inizia nuovo audit</button>
+        <button onclick="navigateTo('reportPrecedenti')">Report Precedenti</button>
+        <button onclick="navigateTo('elencoRilievi')">Elenco dei Rilievi</button>
     </div>
     <script src="script.js"></script>
-    <script>
-        document.getElementById('newAuditButton').addEventListener('click', function() {
-            navigateTo('nuovoAudit');
-        });
-
-        document.getElementById('previousReportsButton').addEventListener('click', function() {
-            navigateTo('reportPrecedenti');
-        });
-
-        document.getElementById('findingsListButton').addEventListener('click', function() {
-            navigateTo('elencoRilievi');
-        });
-    </script>
 </body>
 </html>

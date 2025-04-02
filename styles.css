@@ -95,11 +95,3 @@ img {
 .note {
     width: 300px; /* Espandi la colonna delle note */
 }
-
-@media (max-width: 768px) {
-    button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-    }
-}
