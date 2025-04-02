@@ -1,4 +1,4 @@
-let startX, startY;
+let startX, startY, touchTimeout;
 
 function navigateTo(section) {
     window.location.href = section + '.html';
@@ -13,18 +13,27 @@ function goToAuditSelection() {
 }
 
 function dragStart(event) {
-    startX = event.clientX || event.touches[0].clientX;
-    startY = event.clientY || event.touches[0].clientY;
-    event.target.classList.add('dragging');
+    touchTimeout = setTimeout(() => {
+        startX = event.clientX || event.touches[0].clientX;
+        startY = event.clientY || event.touches[0].clientY;
+        event.target.classList.add('dragging');
+        document.addEventListener('touchmove', preventScroll, { passive: false });
+    }, 500); // 0,5 secondi
 }
 
 function dragEnd(event) {
+    clearTimeout(touchTimeout);
+    document.removeEventListener('touchmove', preventScroll);
     const element = event.target;
     element.classList.remove('dragging');
     const direction = getDragDirection(event);
     if (direction) {
         handleDragDirection(direction, element);
     }
+}
+
+function preventScroll(event) {
+    event.preventDefault();
 }
 
 function getDragDirection(event) {
@@ -103,5 +112,7 @@ function confirmNoteDeletion(element) {
 // Aggiungi gli eventi touch
 document.querySelectorAll('tr').forEach(row => {
     row.addEventListener('touchstart', dragStart);
+    row.addEventListener('touchend', dragEnd);
+});
     row.addEventListener('touchend', dragEnd);
 });
