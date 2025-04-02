@@ -1,4 +1,4 @@
-let startX, startY;
+let startX, startY, touchStartTime;
 
 function navigateTo(section) {
     window.location.href = section + '.html';
@@ -13,6 +13,7 @@ function goToAuditSelection() {
 }
 
 function dragStart(event) {
+    touchStartTime = Date.now(); // Registra il tempo di inizio tocco
     startX = event.clientX || event.touches[0].clientX;
     startY = event.clientY || event.touches[0].clientY;
     event.target.classList.add('dragging');
@@ -21,6 +22,12 @@ function dragStart(event) {
 function dragEnd(event) {
     const element = event.target;
     element.classList.remove('dragging');
+    const elapsedTime = Date.now() - touchStartTime;
+    
+    if (elapsedTime < 500) { // Evita il trascinamento se il tocco dura meno di 0.5s
+        return;
+    }
+    
     const direction = getDragDirection(event);
     if (direction) {
         handleDragDirection(direction, element);
@@ -100,8 +107,13 @@ function confirmNoteDeletion(element) {
     }
 }
 
-// Aggiungi gli eventi touch
+// Blocca lo scroll della pagina quando si trascina una riga della tabella
+function preventPageScroll(event) {
+    event.preventDefault();
+}
+
 document.querySelectorAll('tr').forEach(row => {
     row.addEventListener('touchstart', dragStart);
     row.addEventListener('touchend', dragEnd);
+    row.addEventListener('touchmove', preventPageScroll, { passive: false });
 });
